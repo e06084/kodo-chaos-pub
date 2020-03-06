@@ -17,5 +17,9 @@ curl -Lo /usr/local/bin/s3-benchmark http://plivx6dnj.bkt.clouddn.com/s3-benchma
 info "start performance test with s3-benchmark"
 s3-benchmark -a CDF4IkThrImiuLquQWK-XTVqJvbBbYMFBSts370D -s NrgObTdYBZRg0Sf7gQMSGo6hs-jw6Oi55s506Q1b -b s3-benchmark -t 10 -u http://s3.in.tc.echosoul.cn -d 6000
 
+info "Pls monitor service request @ http://prometheus.in.tc.echosoul.cn/graph"
+
+sleep 300
 
 info "s3-benchmark test complete!"
+
