@@ -1,0 +1,115 @@
+---
+# Init
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: chaos-init
+spec:
+  inputs:
+    resources:
+      - name: kodo-chaos-pub
+        type: git
+  steps:
+    - name: echo
+      image: harbor.tc.echosoul.cn/kodo/qa/kodo-e2e:latest
+      workingDir: "/workspace/"
+      script: |
+        #!/bin/bash
+        bash /workspace/kodo-chaos-pub/script/init.sh
+
+---
+# Test
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: chaos-test
+spec:
+  inputs:
+    resources:
+      - name: kodo-chaos-pub
+        type: git
+  steps:
+    - name: echo
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Test"
+
+---
+# Verify and Monitor
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: chaos-verify
+spec:
+  steps:
+    - name: echo
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Verify and Monitor"
+
+---
+# Clear
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: chaos-clear
+spec:
+  steps:
+    - name: echo
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Clear"
+
+---
+# Pipeline
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: chaos-pipeline
+spec:
+  resources:
+    - name: kodo-chaos-pub
+      type: git
+  tasks:
+  - name: init
+    taskRef:
+      name: chaos-init
+    resources:
+      inputs:
+      - name: kodo-chaos-pub
+        resource: kodo-chaos-pub
+  - name: test
+    taskRef:
+      name: chaos-test
+    resources:
+      inputs:
+      - name: kodo-chaos-pub
+        resource: kodo-chaos-pub
+  - name: verify
+    taskRef:
+      name: chaos-verify
+  - name: clear
+    taskRef:
+      name: chaos-clear
+    runAfter:
+      - init
+
+---
+# PipelineRun
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: pipeline-pfdstg-pod-failure
+spec:
+  pipelineRef:
+    name: chaos-pipeline
+  resources:
+    - name: kodo-chaos-pub
+      resourceRef:
+        name: kodo-chaos-pub
