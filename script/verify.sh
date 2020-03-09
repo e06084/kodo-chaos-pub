@@ -14,7 +14,7 @@ result=0
 
 info "check prometheus alert"
 curl -s http://prometheus.in.tc.echosoul.cn/api/v1/alerts | grep ${ALERT_NAME} || result=$?
-if [[ ${result} -gt 0 ]]; then
+if [[ ${result} -eq 0 ]]; then
     err "prometheus get alter from ${ALERT_NAME}, KODO-chaos test failed!"
 fi
 
