@@ -14,9 +14,9 @@ bucketName="s3-benchmark-"`date +%s%N`
 ALERT_NAME=$1
 result=0
 
-info "Init check prometheus alert is healthy now."
+info "init check prometheus alert is healthy."
 curl -s http://prometheus.in.tc.echosoul.cn/api/v1/alerts | grep ${ALERT_NAME} || result=$?
-if [[ ${result} -gt 0 ]]; then
+if [[ ${result} -eq 0 ]]; then
     err "prometheus get alter from ${ALERT_NAME}, init check failed!"
 fi
 
