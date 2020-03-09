@@ -1,0 +1,26 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: kodo-chaos
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/e06084/kodo-chaos
+    - name: revision
+      value: master
+  serviceAccountName: 'github-bot'
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: kodo-chaos-pub
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/e06084/kodo-chaos-pub
+    - name: revision
+      value: master
