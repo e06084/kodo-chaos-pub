@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-//	"math/rand"
+	"math/rand"
 	"runtime"
 	"time"
 )
@@ -11,7 +11,7 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	start := time.Now()
 	var t *time.Timer
-	t = time.AfterFunc(randomDuration(), func() {
+	t = time.AfterFunc(randomDuration(),    func() {
 		fmt.Println(time.Now().Sub(start))
 		t.Reset(randomDuration())
 	})
