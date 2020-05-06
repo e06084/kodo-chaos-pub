@@ -33,8 +33,8 @@ jobs:
         run: |
           diff=`find . -name "*.go" | xargs gofmt -s -d`
           if [[ -n "${diff}" ]]; then
-               info "Gofmt check failed :"
-               info "${diff}"
-               info "Please run this command to fix: [find . -name "*.go" | xargs gofmt -s -w]"
+               echo "Gofmt check failed :"
+               echo "${diff}"
+               echo "Please run this command to fix: [find . -name "*.go" | xargs gofmt -s -w]"
                exit 1
           fi
